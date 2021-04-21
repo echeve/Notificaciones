@@ -13,10 +13,10 @@ namespace Notificaciones.SignalRHub.Controllers
     [ApiController]
     public class SuscriptoresController : ControllerBase
     {
-        private readonly IHubContext<NotificacionesHub> _notificaciones;
+        private readonly IHubContext<NotificacionesHub, INotificacionesHub> _notificaciones;
         private readonly ILectoresConectados _lectores;
 
-        public SuscriptoresController(IHubContext<NotificacionesHub> notificaciones
+        public SuscriptoresController(IHubContext<NotificacionesHub, INotificacionesHub> notificaciones
             , ILectoresConectados lectores)
         {
             _notificaciones = notificaciones ?? throw new ArgumentNullException(nameof(notificaciones));
@@ -39,7 +39,7 @@ namespace Notificaciones.SignalRHub.Controllers
         [Route("Notificar")]
         public void Post(string value)
         {
-            _notificaciones.Clients.Group(Constantes.LECTOR).SendAsync("EnviarMensajeLectores", value);
+            _notificaciones.Clients.Group(Constantes.LECTOR).EnviarMensajeLectores(value);
 
         }
 
