@@ -31,7 +31,6 @@ namespace Notificaciones.SignalRHub
 
             services.AddControllers();
             services.AddSingleton<ILectoresConectados, LectoresConectados>();
-            services.AddDistributedMemoryCache();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Notificaciones.SignalRHub", Version = "v1" });

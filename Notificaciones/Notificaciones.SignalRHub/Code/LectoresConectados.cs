@@ -1,14 +1,12 @@
-﻿using Microsoft.Extensions.Caching.Memory;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Notificaciones.SignalRHub.Code
 {
     public class LectoresConectados : ILectoresConectados
     {
-        private static IList<string> lectoresConectados;
+        private static IList<string> lectoresConectados ;
         public LectoresConectados()
         {
             lectoresConectados = new List<string>();
@@ -16,12 +14,18 @@ namespace Notificaciones.SignalRHub.Code
 
         public void AnadirLector(string nuevoLector)
         {
-            lectoresConectados.Add(nuevoLector);
+            if (!lectoresConectados.Any(lc => string.Equals(lc, nuevoLector)))
+            {
+                lectoresConectados.Add(nuevoLector);
+            }
         }
 
         public void EliminarLector(string lector)
         {
-            lectoresConectados.Remove(lector);
+            if (lectoresConectados.Any(lc => string.Equals(lc, lector)))
+            {
+                lectoresConectados.Remove(lector);
+            }
         }
 
         public string ObtenerLectoresConectados()
@@ -34,5 +38,9 @@ namespace Notificaciones.SignalRHub.Code
             return lectores;
         }
 
+        public IList<string> ObtenerLectores()
+        {
+            return lectoresConectados;
+        }
     }
 }
